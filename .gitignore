@@ -1,0 +1,28 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual envs / local env folders
+venv/
+env/
+.env/
+.venv/
+
+# Data / dataset artifacts
+fra-eng/
+fra-eng.zip
+
+# Model and preprocessing artifacts
+*.keras
+*.h5
+*.pkl
+*.ckpt
+*.pt
+*.joblib
+
+# Logs
+*.log
