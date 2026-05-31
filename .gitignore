@@ -16,13 +16,15 @@ env/
 fra-eng/
 fra-eng.zip
 
-# Model and preprocessing artifacts
-*.keras
-*.h5
-*.pkl
-*.ckpt
-*.pt
-*.joblib
+# models
+models/
+# # Model and preprocessing artifacts
+# *.keras
+# *.h5
+# *.pkl
+# *.ckpt
+# *.pt
+# *.joblib
 
 # Logs
 *.log

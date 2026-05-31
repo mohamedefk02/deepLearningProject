@@ -26,20 +26,33 @@ def clean_sentence(text):
 
 
 def build_inference_models(training_model):
-    encoder_inputs = training_model.input[0]
-    _, state_h, state_c = training_model.get_layer("encoder_lstm").output
+    # Encoder: Bidirectional
+    encoder_inputs = training_model.get_layer("encoder_inputs").input
+    
+    # Extract states from bidirectional layer
+    # Note: Keras Bidirectional LSTM with return_state returns [output, h_fwd, c_fwd, h_bwd, c_bwd]
+    _, h_fwd, c_fwd, h_bwd, c_bwd = training_model.get_layer("bidirectional_encoder").output
+    
+    state_h = keras.layers.Concatenate()([h_fwd, h_bwd])
+    state_c = keras.layers.Concatenate()([c_fwd, c_bwd])
+    
     encoder_model = keras.Model(encoder_inputs, [state_h, state_c])
 
+    # Decoder
     decoder_inputs = keras.Input(shape=(None,), name="decoder_token_input")
-    decoder_state_input_h = keras.Input(shape=(LSTM_UNITS,), name="decoder_state_input_h")
-    decoder_state_input_c = keras.Input(shape=(LSTM_UNITS,), name="decoder_state_input_c")
+    decoder_state_input_h = keras.Input(shape=(LSTM_UNITS * 2,), name="decoder_state_input_h")
+    decoder_state_input_c = keras.Input(shape=(LSTM_UNITS * 2,), name="decoder_state_input_c")
 
     decoder_embedding = training_model.get_layer("decoder_embedding")(decoder_inputs)
-    decoder_outputs, state_h_out, state_c_out = training_model.get_layer("decoder_lstm")(
+    
+    decoder_lstm_layer = training_model.get_layer("decoder_lstm")
+    decoder_outputs, state_h_out, state_c_out = decoder_lstm_layer(
         decoder_embedding,
         initial_state=[decoder_state_input_h, decoder_state_input_c],
     )
-    decoder_outputs = training_model.get_layer("decoder_softmax")(decoder_outputs)
+
+    decoder_softmax = training_model.get_layer("decoder_softmax")
+    decoder_outputs = decoder_softmax(decoder_outputs)
 
     decoder_model = keras.Model(
         [decoder_inputs, decoder_state_input_h, decoder_state_input_c],
