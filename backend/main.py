@@ -1,3 +1,6 @@
+import os
+os.environ["KERAS_BACKEND"] = "tensorflow"
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException

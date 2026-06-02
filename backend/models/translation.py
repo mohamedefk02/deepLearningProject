@@ -1,4 +1,5 @@
 import os
+os.environ["KERAS_BACKEND"] = "tensorflow"
 import pickle
 import re
 from pathlib import Path
@@ -8,7 +9,7 @@ import numpy as np
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
-from tensorflow import keras
+import keras
 import tensorflow as tf
 
 tf.get_logger().setLevel("ERROR")
