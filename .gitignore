@@ -29,7 +29,7 @@ fra-eng.zip
 
 # Node dependencies and builds
 node_modules/
-dist/
+#dist/
 .vite/
 
 # Python caching
