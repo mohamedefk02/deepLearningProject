@@ -15,10 +15,12 @@ env/
 # Data / dataset artifacts
 fra-eng/
 fra-eng.zip
+lstm_project_handoff.zip
+
 
 # Model and preprocessing artifacts
-#*.keras
-#*.pkl
+*.keras
+*.pkl
 *.h5
 *.ckpt
 *.pt
@@ -45,3 +47,6 @@ Thumbs.db
 /plan
 
 frontend/.env*
+
+# compte rendu
+COMPTE RENDU DU PROJET/
